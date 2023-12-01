@@ -8,16 +8,15 @@ import (
 )
 
 type Digit struct {
-	first      int
-	last       int
-	first_last int
-
-	firstSet bool
-	lastSet  bool
+	first      int  // Index of first digit; after digit is found, this becomes the value of the first digit
+	last       int  // Index of last digit; after digit is found, this becomes the value of the last digit
+	firstSet   bool // Whether the first digit has been found
+	lastSet    bool // Whether the last digit has been found
+	first_last int  // Combined first and last digits
 }
 
 // TrebuchetPartOne calculates the sum of the values
-func TrebuchetPartOne() {
+func TrebuchetPartOne() interface{} {
 	sum := 0
 
 	values, err := read_calibration_doc("/Users/bendoyle/Documents/projects/advent-of-code-2023/pkg/one/trebuchet_calibration.txt")
@@ -38,7 +37,7 @@ func TrebuchetPartOne() {
 		sum += d.first_last
 	}
 
-	log.Println(sum)
+	return sum
 }
 
 // read_calibration_doc reads the list of trebuchet calibration values

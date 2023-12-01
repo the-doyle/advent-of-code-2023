@@ -19,12 +19,13 @@ var StringDigits = []string{
 }
 
 // TrebuchetPartTwo calculates the sum of the values, considering string values as well as integers
-func TrebuchetPartTwo() {
+func TrebuchetPartTwo() interface{} {
 	sum := 0
 
 	values, err := read_calibration_doc("/Users/bendoyle/Documents/projects/advent-of-code-2023/pkg/one/trebuchet_calibration.txt")
 	if err != nil {
 		log.Println(err)
+		return sum
 	}
 
 	for _, value := range values {
@@ -40,7 +41,7 @@ func TrebuchetPartTwo() {
 		sum += d.first_last
 	}
 
-	log.Println(sum)
+	return sum
 }
 
 // first_last_digits_part_two returns a 2-digit integer from a string value.
