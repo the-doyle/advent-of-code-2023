@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-var StringDigits = []string{
+var StringInts = []string{
 	"one",
 	"two",
 	"three",
@@ -25,45 +25,42 @@ func TrebuchetPartTwo() interface{} {
 	values, err := read_calibration_doc("/Users/bendoyle/Documents/projects/advent-of-code-2023/pkg/one/trebuchet_calibration.txt")
 	if err != nil {
 		log.Println(err)
-		return sum
 	}
 
-	for _, value := range values {
-		d := Digit{
-			first: 0,
-			last:  len(value) - 1,
-		}
+	d := CalibrationValue{}
 
-		if err := d.first_last_digits_part_two(value); err != nil {
-			log.Println(err)
-		}
-
-		sum += d.first_last
+	for _, rawValue := range values {
+		d.first, d.last = 0, len(rawValue)-1
+		d.rawValue = rawValue
+		d.find_value_enhanced()
+		sum += d.value
 	}
 
 	return sum
 }
 
-// first_last_digits_part_two returns a 2-digit integer from a string value.
-// This function also considers the possibility of a string integer, e.g. "four"
-//
-// I'll still check for a regular integer first.
-// Then, I'll use a sliding window of five characters to check for the possiblity of a string integer
-func (d *Digit) first_last_digits_part_two(value string) error {
-	// Find the first digit in value
+// find_value_enhanced also considers the possibility of a string integer, e.g. "four"
+func (d *CalibrationValue) find_value_enhanced() {
+	// Find the first digit
 outerFirst:
-	for !d.firstSet {
-		if first, err := strconv.Atoi(string(value[d.first])); err == nil {
-			d.firstSet = true
+	for {
+		// Check for a regular digit, e.g. "4"
+		if first, err := strconv.Atoi(string(d.rawValue[d.first])); err == nil {
 			d.first = first
 			break
 		}
 
-		for i, stringDigit := range StringDigits {
-			if d.first+len(stringDigit) <= len(value) {
-				potentialStringDigit := value[d.first : d.first+len(stringDigit)]
-				if strings.EqualFold(potentialStringDigit, stringDigit) {
-					d.firstSet = true
+		// Iterate over each possible stringInt and check if it exists from the current index
+		for i, stringInt := range StringInts {
+
+			// Make sure the stringInt fits before checking
+			if d.first+len(stringInt) <= len(d.rawValue) {
+
+				// Now check
+				potentialStringInt := d.rawValue[d.first : d.first+len(stringInt)]
+
+				// If there's a match, save the stringInt (using it's index + 1) to d.first and break out of the outer loop
+				if strings.EqualFold(potentialStringInt, stringInt) {
 					d.first = i + 1
 					break outerFirst
 				}
@@ -73,20 +70,18 @@ outerFirst:
 		d.first++
 	}
 
-	// Find the last digit in value
+	// Find the last digit
 outerLast:
-	for !d.lastSet {
-		if last, err := strconv.Atoi(string(value[d.last])); err == nil {
-			d.lastSet = true
+	for {
+		if last, err := strconv.Atoi(string(d.rawValue[d.last])); err == nil {
 			d.last = last
 			break
 		}
 
-		for i, stringDigit := range StringDigits {
-			if d.last-len(stringDigit) >= 0 {
-				potentialStringDigit := value[d.last-len(stringDigit)+1 : d.last+1]
-				if strings.EqualFold(potentialStringDigit, stringDigit) {
-					d.lastSet = true
+		for i, stringInt := range StringInts {
+			if d.last-len(stringInt) >= 0 {
+				potentialStringInt := d.rawValue[d.last-len(stringInt)+1 : d.last+1]
+				if strings.EqualFold(potentialStringInt, stringInt) {
 					d.last = i + 1
 					break outerLast
 				}
@@ -97,6 +92,5 @@ outerLast:
 	}
 
 	// Convert the first and last digits to int and return
-	d.first_last = d.first*10 + d.last
-	return nil
+	d.value = d.first*10 + d.last
 }

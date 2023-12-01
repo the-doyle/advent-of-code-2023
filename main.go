@@ -12,10 +12,10 @@ func main() {
 	// measureExecutionTime(one.TrebuchetPartTwo, "Trebuchet Part Two")
 }
 
-// measureExecutionTime takes another function as a parameter, runs it 500 times,
+// measureExecutionTime takes another function as a parameter, runs it 10k times,
 // and returns the result as well as the min/max/avg time taken
 func measureExecutionTime(f func() interface{}, name string) {
-	runs := 500
+	runs := 10000
 
 	var totalTime time.Duration
 
@@ -41,7 +41,7 @@ func measureExecutionTime(f func() interface{}, name string) {
 	avg := totalTime / time.Duration(runs)
 
 	fmt.Println("————————————————————————————-")
-	fmt.Printf(name)
+	fmt.Printf(name + "\n")
 	fmt.Printf("Result: %v\n", result)
 	fmt.Printf("Minimum time taken: %v\n", min.String())
 	fmt.Printf("Maximum time taken: %v\n", max.String())
