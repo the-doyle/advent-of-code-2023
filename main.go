@@ -4,12 +4,16 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/the-doyle/advent-of-code-2023/pkg/one"
+	"github.com/the-doyle/advent-of-code-2023/pkg/two"
 )
 
 func main() {
-	measureExecutionTime(one.TrebuchetPartOne, "Trebuchet Part One")
+	// measureExecutionTime(one.TrebuchetPartOne, "Trebuchet Part One")
 	// measureExecutionTime(one.TrebuchetPartTwo, "Trebuchet Part Two")
+
+	measureExecutionTime(two.CubesPartOne, "Cubes Part One")
+	measureExecutionTime(two.CubesPartTwo, "Cubes Part Two")
+
 }
 
 // measureExecutionTime takes another function as a parameter, runs it 10k times,
