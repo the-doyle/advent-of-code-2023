@@ -4,15 +4,17 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/the-doyle/advent-of-code-2023/pkg/two"
+	"github.com/the-doyle/advent-of-code-2023/pkg/three"
 )
 
 func main() {
 	// measureExecutionTime(one.TrebuchetPartOne, "Trebuchet Part One")
 	// measureExecutionTime(one.TrebuchetPartTwo, "Trebuchet Part Two")
 
-	measureExecutionTime(two.CubesPartOne, "Cubes Part One")
-	measureExecutionTime(two.CubesPartTwo, "Cubes Part Two")
+	// measureExecutionTime(two.CubesPartOne, "Cubes Part One")
+	// measureExecutionTime(two.CubesPartTwo, "Cubes Part Two")
+
+	three.EnginePartTwo()
 
 }
 
